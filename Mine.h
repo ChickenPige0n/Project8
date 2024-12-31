@@ -17,7 +17,7 @@ class Mine : public Item {
     }
     void update(int key) {
         auto pl = game->player;
-        if (abs(pl->row -= row) <= 1 && abs(pl->col == col) <= 1){
+        if (abs(pl->row -= row) <= 1 && abs(pl->col == col) <= 1) {
             is_out = true;
             pl->hit(5);
         }

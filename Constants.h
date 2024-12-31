@@ -6,8 +6,4 @@
 #define MAX_COL 84
 #define MIN_COL 4
 
-
-
-
-
 #endif

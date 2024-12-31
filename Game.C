@@ -1,8 +1,8 @@
 #include "Bomb.h"
 #include "Bullet.h"
 #include "Game.h"
-#include "Player.h"
 #include "LivingEntity.h"
+#include "Player.h"
 #include "Tank.h"
 #include <cstdlib>
 #include <ctime>
@@ -81,7 +81,7 @@ void Game::complete() {
     }
     remove_all<Bullet>();
     remove_all<Bomb>();
-    
+
     score = 0;
     player->row = 12;
     player->col = 25;

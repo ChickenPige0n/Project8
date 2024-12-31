@@ -51,7 +51,7 @@ void Gui::printMsg(int row, int col, char *prompt, int v) {
 
 void Gui::clear() {
     werase(win);
-    
+
     for (int i = 0; i < 30; i++) {
         mvaddch(i, 4, '|');
         mvaddch(i, 84, '|');

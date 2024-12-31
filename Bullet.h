@@ -6,6 +6,7 @@
 
 class Bullet : public Item {
     Direction dir;
+
   public:
     Bullet(size_t r, size_t c, Game *game, Direction d) : Item(game), dir(d) {
         type = "Bullet";

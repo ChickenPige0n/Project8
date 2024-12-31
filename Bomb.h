@@ -19,7 +19,7 @@ class Bomb : public Item {
     }
     void update(int key) {
         auto pl = game->player;
-        if (pl->row == row && pl->col == col){
+        if (pl->row == row && pl->col == col) {
             pl->hit(1);
             is_out = true;
         }

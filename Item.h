@@ -1,8 +1,8 @@
 #ifndef _ITEM_H_
 #define _ITEM_H_
 #include "Constants.h"
-#include "Game.h"
 #include "Direction.h"
+#include "Game.h"
 #include <memory>
 // Item base class
 class Item {

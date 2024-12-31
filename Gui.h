@@ -9,20 +9,15 @@ class Gui {
     bool colored;
 
   public:
-    enum Color{
-        NormalTank = 1,
-        SuperTank,
-        Player,
-        Bullet
-    };
+    enum Color { NormalTank = 1, SuperTank, Player, Bullet };
     Gui() : row(20), col(50) {
         colored = has_colors();
         if (colored) {
             start_color();
             init_pair(1, COLOR_YELLOW, COLOR_GREEN); // normal tank
-            init_pair(2, COLOR_CYAN, COLOR_BLUE);   // super tank
-            init_pair(3, COLOR_BLACK, COLOR_WHITE); // player
-            init_pair(4, COLOR_RED, COLOR_MAGENTA); // bullet
+            init_pair(2, COLOR_CYAN, COLOR_BLUE);    // super tank
+            init_pair(3, COLOR_BLACK, COLOR_WHITE);  // player
+            init_pair(4, COLOR_RED, COLOR_MAGENTA);  // bullet
         }
         init();
     }

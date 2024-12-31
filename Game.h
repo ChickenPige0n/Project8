@@ -1,7 +1,7 @@
 #ifndef _GAME_H_
 #define _GAME_H_
-#include "Gui.h"
 #include "Direction.h"
+#include "Gui.h"
 #include <cmath>
 #include <list>
 using namespace std;
@@ -20,7 +20,7 @@ class Game {
     int score;
 
   public:
-    Player* player;
+    Player *player;
 
     int bullet_count;
     int bullet_timer;
@@ -35,12 +35,9 @@ class Game {
         gui.end();
     }
     bool query_hit(Bullet *bullet);
-    
-    template<typename T>
-    list<T*> get_items();
-    template<typename T>
-    void remove_all();
 
+    template <typename T> list<T *> get_items();
+    template <typename T> void remove_all();
 
     void add_bullet(size_t r, size_t c, Direction d);
     void add_bomb(size_t r, size_t c);

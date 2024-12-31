@@ -1,9 +1,9 @@
 #ifndef _TANK_H_
 #define _TANK_H_
 #include "Bomb.h"
+#include "Constants.h"
 #include "Game.h"
 #include "Item.h"
-#include "Constants.h"
 #include <cstdlib>
 
 class Tank : public LivingEntity {
@@ -46,7 +46,7 @@ class Tank : public LivingEntity {
 
     void super_update() {
         int randomNumber = rand();
-        if (! randomNumber % 3) {
+        if (!randomNumber % 3) {
             // 1/3 chance to follow player
             return;
         }
