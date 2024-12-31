@@ -36,7 +36,7 @@ class Game {
     bool query_hit(Bullet *bullet);
     
     template<typename T>
-    list<T*>* get_items();
+    list<T*> get_items();
     template<typename T>
     void remove_all();
 
