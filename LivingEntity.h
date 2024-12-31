@@ -28,8 +28,6 @@ class LivingEntity : public Item {
 	void heal(int amount) {
 		health += amount;
 	}
-	void update(int key);
-	bool out();
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "Player.h"
+#include "LivingEntity.h"
 #include "Tank.h"
 #include <cstdlib>
 #include <ctime>
@@ -13,7 +14,7 @@ Game::Game() {
     gui.init();
     player = new Player(this);
     items.push_back(player);
-    items.push_back(new Tank(this, 15, 40, false));
+    items.push_back(new Tank(this, 15, 40, true));
     score = 0;
     bullet_count = 10;
     bullet_timer = 40;
