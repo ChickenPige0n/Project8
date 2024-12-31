@@ -11,6 +11,7 @@ using namespace std;
 
 int main() {
 
+    srand(time(0));
     struct timeval time_now {};
 
     gettimeofday(&time_now, NULL);
