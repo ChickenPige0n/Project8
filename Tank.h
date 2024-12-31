@@ -7,7 +7,6 @@
 #include <cstdlib>
 
 class Tank : public LivingEntity {
-    Direction dir;
     bool is_super;
 
     // only for super.
@@ -16,9 +15,11 @@ class Tank : public LivingEntity {
     int mine_timer = 100;
 
   public:
+    char *get_type() override {
+        return "Tank";
+    }
     Tank(Game *g, int r, int c, bool is_super)
         : LivingEntity(r, c, g, NoneDirection), is_super(is_super) {
-        type = "Tank";
         is_out = false;
         health = is_super ? 4 : 1;
     }
@@ -46,7 +47,7 @@ class Tank : public LivingEntity {
 
     void super_update() {
         int randomNumber = rand();
-        if (!randomNumber % 3) {
+        if (randomNumber % 3) {
             // 1/3 chance to follow player
             return;
         }
@@ -75,7 +76,14 @@ class Tank : public LivingEntity {
         move();
         int randomNumber = rand() % 99;
         if (randomNumber <= 2) {
-            game->add_bomb(row, col);
+            int dx = 0;
+            if (dir == Left) {
+                dx = -1;
+            } else if (dir == Right) {
+                dx = 1;
+            }
+            game->add_bullet(row, col + dx, dir, get_type());
+            // game->add_bomb(row, col);
         }
 
         auto color = is_super ? Gui::SuperTank : Gui::NormalTank;

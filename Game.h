@@ -39,7 +39,7 @@ class Game {
     template <typename T> list<T *> get_items();
     template <typename T> void remove_all();
 
-    void add_bullet(size_t r, size_t c, Direction d);
+    void add_bullet(size_t r, size_t c, Direction d, char *source);
     void add_bomb(size_t r, size_t c);
     void update();
     void complete();

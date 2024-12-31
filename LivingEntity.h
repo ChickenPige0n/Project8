@@ -2,6 +2,7 @@
 #define _LIVINGENTITY_H_
 #include "Game.h"
 #include "Item.h"
+#include <cstring>
 #include <memory>
 
 class LivingEntity : public Item {
@@ -9,27 +10,29 @@ class LivingEntity : public Item {
     int health;
 
   public:
+    char *get_type() override {
+        return "LivingEntity";
+    }
     LivingEntity(size_t r, size_t c, Game *game, Direction d) : Item(game) {
-        type = "LivingEntity";
         row = r;
         col = c;
         is_out = false;
     }
 
-    void hit(int damage) {
+    virtual void hit(int damage) {
         health -= damage;
         if (health <= 0) {
-            if (type == "Player") {
+            if (strcmp(get_type(), "Player") == 0) {
                 game->complete();
             }
             is_out = true;
         }
     }
-    int get_health() {
+    virtual int get_health() {
         return health;
     }
 
-    void heal(int amount) {
+    virtual void heal(int amount) {
         health += amount;
     }
 };

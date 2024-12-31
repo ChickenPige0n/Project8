@@ -7,8 +7,10 @@
 
 class Player : public LivingEntity {
   public:
+    char *get_type() override {
+        return "Player";
+    }
     Player(Game *g) : LivingEntity(MAX_ROW / 2, MAX_COL / 2, g, NoneDirection) {
-        type = "Player";
         health = 10;
     }
     Direction get_dir();

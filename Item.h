@@ -43,10 +43,12 @@ class Item {
             break;
         }
     }
+    virtual char *get_type() {
+        return "Item";
+    }
 
   protected:
     Direction dir;
-    char *type;
     bool is_out;
 };
 #endif

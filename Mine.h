@@ -9,9 +9,11 @@
 class Mine : public Item {
 
   public:
+    char *get_type() override {
+        return "Mine";
+    }
     // stage from 4 to 66
     Mine(Game *g, size_t r, size_t c) : Item(g) {
-        type = "Mine";
         row = r;
         col = c;
     }

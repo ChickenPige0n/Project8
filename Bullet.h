@@ -5,13 +5,17 @@
 #include <memory>
 
 class Bullet : public Item {
-    Direction dir;
 
   public:
-    Bullet(size_t r, size_t c, Game *game, Direction d) : Item(game), dir(d) {
-        type = "Bullet";
+    char *damageSource;
+    char *get_type() override {
+        return "Bullet";
+    }
+    Bullet(size_t r, size_t c, Game *game, Direction d, char *source)
+        : Item(game), damageSource(source) {
         row = r;
         col = c;
+        dir = d;
         is_out = false;
     }
     void update(int key);

@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Tank.h"
 #include <cstdlib>
+#include <cstring>
 #include <ctime>
 #include <curses.h>
 #include <math.h>
@@ -14,17 +15,20 @@ Game::Game() {
     gui.init();
     player = new Player(this);
     items.push_back(player);
-    items.push_back(new Tank(this, 15, 40, true));
+    items.push_back(new Tank(this, 15, 40, false));
     score = 0;
     bullet_count = 10;
     bullet_timer = 40;
     srand(time(0));
 }
 
-void Game::add_bullet(size_t r, size_t c, Direction d) {
-    if (bullet_count > 0) {
+void Game::add_bullet(size_t r, size_t c, Direction d, char *source) {
+    d = d == NoneDirection ? Up : d;
+    if (bullet_count > 0 && strcmp(source, "Player") == 0) {
         bullet_count--;
-        items.push_back(new Bullet(r, c, this, d == NoneDirection ? Up : d));
+        items.push_back(new Bullet(r, c, this, d, source));
+    } else if (strcmp(source, "Tank") == 0) {
+        items.push_back(new Bullet(r, c, this, d, source));
     }
 }
 void Game::add_bomb(size_t r, size_t c) {
@@ -59,11 +63,13 @@ void Game::update() {
 }
 
 bool Game::query_hit(Bullet *bullet) {
-    for (auto tank : get_items<Tank>()) {
-        if (bullet->row == tank->row &&
-            abs((int)bullet->col - (int)tank->col) < 2) {
-            score += 100;
-            tank->hit(1);
+    for (auto enitiy : get_items<LivingEntity>()) {
+        int width = strcmp(enitiy->get_type(), "Player") == 0 ? 1 : 2;
+        if (bullet->row == enitiy->row &&
+            abs((int)bullet->col - (int)enitiy->col) < width) {
+            if (strcmp(bullet->damageSource, "Player") == 0)
+                score += 100;
+            enitiy->hit(1);
             return true;
         }
     }
@@ -93,7 +99,7 @@ template <typename T> list<T *> Game::get_items() {
     auto selected = list<T *>();
     auto ii = items.begin();
     while (ii != items.end()) {
-        if (typeid(**ii) == typeid(T)) {
+        if (dynamic_cast<T *>(*ii)) {
             selected.push_front(dynamic_cast<T *>(*ii));
         }
         ii++;

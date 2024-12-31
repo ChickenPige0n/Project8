@@ -11,11 +11,13 @@ class Bomb : public Item {
   public:
     // stage from 4 to 66
     Bomb(Game *g, size_t r, size_t c) : Item(g) {
-        type = "Bomb";
         is_out = false;
         row = r;
         col = c;
         dir = Down;
+    }
+    char *get_type() override {
+        return "Bomb";
     }
     void update(int key) {
         auto pl = game->player;

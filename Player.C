@@ -46,7 +46,7 @@ void Player::update(int key) {
     move();
     // handle shooting
     if (shoot == 1)
-        game->add_bullet(row, col, dir);
+        game->add_bullet(row, col, dir, get_type());
 
     game->paintat(row, col, 'M');
     int len = (health / 10.) * (MAX_COL - MIN_COL - 1);
