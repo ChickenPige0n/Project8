@@ -1,5 +1,7 @@
 #ifndef _GAME_H_
 #define _GAME_H_
+#include "BitGrid.h"
+#include "Constants.h"
 #include "Direction.h"
 #include "Gui.h"
 #include <cmath>
@@ -20,6 +22,7 @@ class Game {
     int score;
 
   public:
+    BitGrid obstacle_grid;
     Player *player;
 
     Game();

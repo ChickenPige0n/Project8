@@ -13,7 +13,15 @@
 #include <math.h>
 #include <memory>
 #include <unistd.h>
-Game::Game() {
+Game::Game() : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
+    int size_r = MAX_ROW + 4;
+    int size_c = MAX_COL + 4;
+    for (int r = 0; r < size_r; r++) {
+        for (int c = 0; c < size_c; c++) {
+            obstacle_grid.set(r, c, rand() % 100 < 2);
+        }
+    }
+
     Tank::init();
     gui.init();
     player = new Player(this);
@@ -38,7 +46,8 @@ void Game::update() {
     gui.printMsg(2, 68, "Bullet", player->bullet_count);
     gui.printMsg(3, 68, "Score", score);
     auto tank_num_left = Tank::get_num_left();
-    gui.printMsg(4, 68, "Tank Left", tank_num_left);
+    gui.printMsg(4, 68, "Tank Left", tank_num_left + get_items<Tank>().size());
+
     if (get_items<Tank>().size() < 4 && tank_num_left > 0) {
         int row = rand() % (MAX_ROW - MIN_ROW - 10) + 5;
         int col = rand() % (MAX_COL - MIN_COL - 20) + 10;
@@ -62,6 +71,14 @@ void Game::update() {
             bi = items.erase(bi);
         } else {
             bi++;
+        }
+    }
+
+    for (int r = MIN_ROW; r < MAX_ROW; r++) {
+        for (int c = MIN_COL; c < MAX_COL; c++) {
+            if (obstacle_grid.get(r, c)) {
+                gui.paintat(r, c, '#');
+            }
         }
     }
 }

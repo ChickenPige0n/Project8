@@ -4,7 +4,8 @@
 
 void Bullet::update(int key) {
     move();
-    if (col >= MAX_COL || row <= MIN_ROW || row >= MAX_ROW || col <= MIN_COL) {
+    if (col >= MAX_COL || row <= MIN_ROW || row >= MAX_ROW || col <= MIN_COL ||
+        dir == NoneDirection) {
         is_out = true;
         return;
     }

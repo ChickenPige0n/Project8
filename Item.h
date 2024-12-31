@@ -22,22 +22,43 @@ class Item {
         return false;
     }
     void move() {
+        auto ob = game->obstacle_grid;
         switch (dir) {
         case Up:
-            if (row > MIN_ROW)
+            if (row > MIN_ROW) {
+                if (ob.get(row - 1, col)) {
+                    dir = NoneDirection;
+                    return;
+                }
                 row--;
+            }
             break;
         case Down:
-            if (row < MAX_ROW)
+            if (row < MAX_ROW) {
+                if (ob.get(row + 1, col)) {
+                    dir = NoneDirection;
+                    return;
+                }
                 row++;
+            }
             break;
         case Left:
-            if (col > MIN_COL)
+            if (col > MIN_COL) {
+                if (ob.get(row, col - 1)) {
+                    dir = NoneDirection;
+                    return;
+                }
                 col--;
+            }
             break;
         case Right:
-            if (col < MAX_COL)
+            if (col < MAX_COL) {
+                if (ob.get(row, col + 1)) {
+                    dir = NoneDirection;
+                    return;
+                }
                 col++;
+            }
             break;
         case NoneDirection:
             break;

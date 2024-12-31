@@ -1,3 +1,4 @@
+#include "Constants.h"
 #include "Gui.h"
 #include <cstring>
 #include <ncurses.h>
@@ -16,8 +17,8 @@ void Gui::init() {
     nodelay(win, true);
     flushinp();
     for (int i = 0; i < 30; i++) {
-        mvaddch(i, 4, '|');
-        mvaddch(i, 84, '|');
+        mvaddch(i, MIN_COL, '|');
+        mvaddch(i, MAX_COL, '|');
     }
 }
 
@@ -57,7 +58,7 @@ void Gui::clear() {
     werase(win);
 
     for (int i = 0; i < 30; i++) {
-        mvaddch(i, 4, '|');
-        mvaddch(i, 84, '|');
+        mvaddch(i, MIN_COL, '|');
+        mvaddch(i, MAX_COL, '|');
     }
 }

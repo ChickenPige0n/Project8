@@ -40,6 +40,7 @@ class Tank : public LivingEntity {
     void normal_update() {
         int randomNumber = rand() % 3;
         if (randomNumber != 0) {
+            dir = NoneDirection;
             return;
         }
         randomNumber = rand() % 5;
@@ -71,9 +72,9 @@ class Tank : public LivingEntity {
                 mine_count++;
         }
         int randomNumber = rand();
-        if (randomNumber % 3 != 0) {
+        if (randomNumber % 6 != 0) {
             dir = NoneDirection;
-            // 1/3 chance to follow player
+            // 1/6 chance to follow player
             return;
         }
         randomNumber = rand();
