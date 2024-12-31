@@ -16,9 +16,10 @@ class Mine : public Item {
         col = c;
     }
     void update(int key) {
-        if (abs(game->player->row -= row) <= 1 && abs(game->player->col == col) <= 1){
+        auto pl = game->player;
+        if (abs(pl->row -= row) <= 1 && abs(pl->col == col) <= 1){
             is_out = true;
-            // game->complete();
+            pl->hit(1);
         }
     }
     bool out() {

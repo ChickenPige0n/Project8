@@ -13,7 +13,7 @@ Game::Game() {
     gui.init();
     player = new Player(this);
     items.push_back(player);
-    items.push_back(new Tank(this, 15, 40));
+    items.push_back(new Tank(this, 15, 40, false));
     score = 0;
     bullet_count = 10;
     bullet_timer = 40;
@@ -41,7 +41,7 @@ void Game::update() {
         bullet_timer--;
     } else {
         bullet_timer = 40;
-        if (bullet_count < 10)
+        if (bullet_count < 20)
             bullet_count++;
     }
 
@@ -64,7 +64,7 @@ bool Game::query_hit(Bullet *bullet) {
         if (bullet->row == tank->row &&
             abs((int)bullet->col - (int)tank->col) < 2) {
             score += 100;
-            tank->disable();
+            tank->hit(1);
             return true;
         }
     }
@@ -86,7 +86,7 @@ void Game::complete() {
     score = 0;
     player->row = 12;
     player->col = 25;
-    bullet_count = 10;
+    bullet_count = 20;
     bullet_timer = 40;
 }
 

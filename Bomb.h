@@ -17,9 +17,10 @@ class Bomb : public Item {
         col = c;
     }
     void update(int key) {
-        if (game->player->row == row && game->player->col == col){
+        auto pl = game->player;
+        if (pl->row == row && pl->col == col){
+            pl->hit(1);
             is_out = true;
-            game->complete();
         }
         game->paintat(row, col, 'Q');
         row += 1;

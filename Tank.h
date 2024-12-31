@@ -4,20 +4,21 @@
 #include "Game.h"
 #include "Item.h"
 #include <cstdlib>
-class Tank : public Item {
+
+class Tank : public LivingEntity {
     bool is_super;
 
+    // only for super.
+    // max value
+    int mine_count = 10;
+    int mine_timer = 100;
+
   public:
-    Tank(Game *g, int r, int c) : Item(g) {
+    Tank(Game *g, int r, int c, bool is_super)
+        : LivingEntity(r, c, g, None), is_super(is_super) {
         type = "Tank";
         is_out = false;
-        row = r;
-        col = c;
-    }
-    void disable() {
-        if (is_super)
-            return;
-        is_out = true;
+        health = is_super ? 4 : 1;
     }
 
     void normal_update() {
@@ -46,6 +47,10 @@ class Tank : public Item {
         }
     }
     void super_update() {
+        int randomNumber = rand();
+        if (randomNumber % 2) {
+            return;
+        }
         auto p = game->player;
         auto x_diff = p->row - row;
         auto y_diff = p->col - col;

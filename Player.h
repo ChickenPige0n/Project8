@@ -3,15 +3,13 @@
 #include "Constants.h"
 #include "Game.h"
 #include "Item.h"
+#include "LivingEntity.h"
 
-class Player : public Item {
+class Player : public LivingEntity {
     Direction dir;
   public:
-    Player(Game *g) : Item(g) {
+    Player(Game *g) : LivingEntity(MAX_ROW / 2, MAX_COL / 2, g, None) {
         type = "Player";
-        row = MAX_ROW / 2;
-        col = MAX_COL / 2;
-        dir = None;
     }
     Direction get_dir();
     bool out() override {
