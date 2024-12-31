@@ -33,7 +33,8 @@ class Tank : public LivingEntity {
         }
         tank_num_left--;
         is_out = false;
-        health = this->is_super ? 4 : 1;
+        max_health = this->is_super ? 4 : 1;
+        health = max_health;
     }
 
     void normal_update() {

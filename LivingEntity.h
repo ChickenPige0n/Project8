@@ -8,6 +8,7 @@
 class LivingEntity : public Item {
   protected:
     int health;
+    int max_health;
 
   public:
     char *get_type() override {
@@ -34,6 +35,9 @@ class LivingEntity : public Item {
 
     virtual void heal(int amount) {
         health += amount;
+        if (health > max_health) {
+            health = max_health;
+        }
     }
 };
 

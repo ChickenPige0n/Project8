@@ -16,7 +16,8 @@ class Player : public LivingEntity {
         return "Player";
     }
     Player(Game *g) : LivingEntity(MAX_ROW / 2, MAX_COL / 2, g, NoneDirection) {
-        health = 10;
+        max_health = 10;
+        health = max_health;
         bullet_count = 10;
         bullet_timer = 40;
     }

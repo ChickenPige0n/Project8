@@ -1,6 +1,7 @@
 #include "Bomb.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "HealthPack.h"
 #include "LivingEntity.h"
 #include "Mine.h"
 #include "Player.h"
@@ -44,6 +45,13 @@ void Game::update() {
         items.push_back(new Tank(this, row, col, true));
     }
 
+    int r = rand() % 100;
+    if (r < 1) {
+        int row = rand() % (MAX_ROW - MIN_ROW - 10) + 5;
+        int col = rand() % (MAX_COL - MIN_COL - 10) + 5;
+        items.push_back(new HealthPack(this, row, col));
+    }
+
     int c = gui.get();
     list<Item *>::iterator bi = items.begin();
     while (bi != items.end()) {
@@ -84,7 +92,7 @@ void Game::complete() {
     remove_all<Bullet>();
     remove_all<Tank>();
     remove_all<Mine>();
-
+    Tank::init();
     score = 0;
     player->reset();
 }
