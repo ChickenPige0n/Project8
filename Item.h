@@ -2,11 +2,11 @@
 #define _ITEM_H_
 #include "Constants.h"
 #include "Game.h"
+#include "Direction.h"
 #include <memory>
 // Item base class
 class Item {
   public:
-    enum Direction { Up, Down, Left, Right, None };
     int row;
     int col;
     Game *game;
@@ -39,7 +39,7 @@ class Item {
             if (col < MAX_COL)
                 col++;
             break;
-        case None:
+        case NoneDirection:
             break;
         }
     }

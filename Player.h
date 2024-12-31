@@ -6,9 +6,8 @@
 #include "LivingEntity.h"
 
 class Player : public LivingEntity {
-    Direction dir;
   public:
-    Player(Game *g) : LivingEntity(MAX_ROW / 2, MAX_COL / 2, g, None) {
+    Player(Game *g) : LivingEntity(MAX_ROW / 2, MAX_COL / 2, g, NoneDirection) {
         type = "Player";
         health = 10;
     }

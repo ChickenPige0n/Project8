@@ -21,12 +21,10 @@ Game::Game() {
     srand(time(0));
 }
 
-void Game::add_bullet(size_t r, size_t c) {
+void Game::add_bullet(size_t r, size_t c, Direction d) {
     if (bullet_count > 0) {
         bullet_count--;
-        auto dir = player->get_dir();
-        dir = dir == Item::None ? Item::Up : dir;
-        items.push_back(new Bullet(r, c, this, Item::Up));
+        items.push_back(new Bullet(r, c, this, d == NoneDirection ? Up : d));
     }
 }
 void Game::add_bomb(size_t r, size_t c) {

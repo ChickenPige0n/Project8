@@ -1,6 +1,7 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 #include "Gui.h"
+#include "Direction.h"
 #include <cmath>
 #include <list>
 using namespace std;
@@ -41,7 +42,7 @@ class Game {
     void remove_all();
 
 
-    void add_bullet(size_t r, size_t c);
+    void add_bullet(size_t r, size_t c, Direction d);
     void add_bomb(size_t r, size_t c);
     void update();
     void complete();

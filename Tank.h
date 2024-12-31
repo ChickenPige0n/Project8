@@ -17,7 +17,7 @@ class Tank : public LivingEntity {
 
   public:
     Tank(Game *g, int r, int c, bool is_super)
-        : LivingEntity(r, c, g, None), is_super(is_super) {
+        : LivingEntity(r, c, g, NoneDirection), is_super(is_super) {
         type = "Tank";
         is_out = false;
         health = is_super ? 4 : 1;
@@ -39,7 +39,7 @@ class Tank : public LivingEntity {
             dir = Down;
             break;
         case 4:
-            dir = None;
+            dir = NoneDirection;
             break;
         }
     }
