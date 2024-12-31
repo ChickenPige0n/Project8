@@ -33,6 +33,14 @@ void Gui::paintat(size_t rw, size_t cl, char c) {
     return;
 }
 
+void Gui::paintat(size_t rw, size_t cl, char c, Color color) {
+    attron(COLOR_PAIR(color));
+    mvwaddch(win, rw, cl, c);
+    attroff(COLOR_PAIR(color));
+    wrefresh(win);
+    return;
+}
+
 void Gui::printMsg(int row, int col, char *prompt, int v) {
     mvwprintw(win, row, col, prompt);
     char s[32];
