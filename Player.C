@@ -65,6 +65,14 @@ void Player::update(int key) {
     }
 }
 
+void Player::reset() {
+    row = MAX_ROW / 2;
+    col = MAX_COL / 2;
+    health = 10;
+    bullet_count = 10;
+    bullet_timer = 40;
+}
+
 Direction Player::get_dir() {
     return dir;
 }

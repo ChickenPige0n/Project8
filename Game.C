@@ -36,6 +36,13 @@ void Game::update() {
     gui.clear();
     gui.printMsg(2, 68, "Bullet", player->bullet_count);
     gui.printMsg(3, 68, "Score", score);
+    auto tank_num_left = Tank::get_num_left();
+    gui.printMsg(4, 68, "Tank Left", tank_num_left);
+    if (get_items<Tank>().size() < 4 && tank_num_left > 0) {
+        int row = rand() % (MAX_ROW - MIN_ROW - 10) + 5;
+        int col = rand() % (MAX_COL - MIN_COL - 20) + 10;
+        items.push_back(new Tank(this, row, col, true));
+    }
 
     int c = gui.get();
     list<Item *>::iterator bi = items.begin();
@@ -79,11 +86,7 @@ void Game::complete() {
     remove_all<Mine>();
 
     score = 0;
-    player->row = 12;
-    player->col = 25;
-    player->heal(10);
-    player->bullet_count = 20;
-    player->bullet_timer = 40;
+    player->reset();
 }
 
 template <typename T> list<T *> Game::get_items() {

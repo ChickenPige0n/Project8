@@ -6,7 +6,7 @@ CCFLAGS += $(DEPFLAGS)
 CCLIBS = -lncurses
 
 # List of object files
-OBJS = main.o Gui.o Game.o Player.o Bullet.o
+OBJS = main.o Gui.o Game.o Player.o Bullet.o Tank.o
 
 # Target executable
 mygame: $(OBJS)

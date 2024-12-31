@@ -10,6 +10,8 @@ class Player : public LivingEntity {
     int bullet_count;
     int bullet_timer;
 
+    void reset();
+
     char *get_type() override {
         return "Player";
     }

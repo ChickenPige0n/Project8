@@ -1,9 +1,9 @@
 #ifndef _PROJ7_CONST_
 #define _PROJ7_CONST_
 
-#define MAX_ROW 30
-#define MIN_ROW 1
-#define MAX_COL 84
-#define MIN_COL 4
+const int MAX_ROW = 30;
+const int MIN_ROW = 1;
+const int MAX_COL = 84;
+const int MIN_COL = 4;
 
 #endif

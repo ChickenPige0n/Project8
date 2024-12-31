@@ -5,10 +5,9 @@
 #include "Game.h"
 #include "Item.h"
 #include <cstdlib>
-
 class Tank : public LivingEntity {
     bool is_super;
-    static int tank_unshown;
+    static int tank_num_left;
 
     // only for super.
     // max value
@@ -20,22 +19,29 @@ class Tank : public LivingEntity {
         return "Tank";
     }
     static void init() {
-        tank_unshown = 20;
+        tank_num_left = 20;
+    }
+    static int get_num_left() {
+        return tank_num_left;
     }
     Tank(Game *g, int r, int c, bool is_super)
         : LivingEntity(r, c, g, NoneDirection), is_super(is_super) {
-        tank_unshown--;
-        if (tank_unshown % 4 == 0) {
-            is_super = true;
+        if (tank_num_left % 4 == 0) {
+            this->is_super = true;
         } else {
-            is_super = false;
+            this->is_super = false;
         }
+        tank_num_left--;
         is_out = false;
-        health = is_super ? 4 : 1;
+        health = this->is_super ? 4 : 1;
     }
 
     void normal_update() {
-        int randomNumber = rand() % 5;
+        int randomNumber = rand() % 3;
+        if (randomNumber != 0) {
+            return;
+        }
+        randomNumber = rand() % 5;
         switch (randomNumber) {
         case 0:
             dir = Left;
@@ -111,9 +117,9 @@ class Tank : public LivingEntity {
 
         auto color = is_super ? Gui::SuperTank : Gui::NormalTank;
         game->paintat(row, col - 1, 'C', color);
-        game->paintat(row, col, is_super ? 'X' : 'O', color);
+        game->paintat(row, col, 'E' - health, color);
         game->paintat(row, col + 1, 'D', color);
-        game->paintat(row - 1, col, health + '0', color);
+        game->paintat(row - 1, col, is_super ? '!' : ' ', color);
     }
     bool out() {
         return is_out;
