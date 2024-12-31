@@ -6,6 +6,15 @@
 using namespace std;
 
 void Player::update(int key) {
+
+    if (bullet_timer > 0) {
+        bullet_timer--;
+    } else {
+        bullet_timer = 40;
+        if (bullet_count < 20)
+            bullet_count++;
+    }
+
     int shoot = 0;
     // handle input key
     switch (key) {
@@ -45,9 +54,10 @@ void Player::update(int key) {
     }
     move();
     // handle shooting
-    if (shoot == 1)
+    if (shoot == 1 && bullet_count > 0) {
+        bullet_count--;
         game->add_bullet(row, col, dir, get_type());
-
+    }
     game->paintat(row, col, 'M');
     int len = (health / 10.) * (MAX_COL - MIN_COL - 1);
     for (int i = 0; i < len; i++) {

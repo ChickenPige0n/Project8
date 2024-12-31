@@ -22,9 +22,6 @@ class Game {
   public:
     Player *player;
 
-    int bullet_count;
-    int bullet_timer;
-
     Game();
     ~Game() {
         auto ii = items.begin();

@@ -15,21 +15,14 @@ Game::Game() {
     gui.init();
     player = new Player(this);
     items.push_back(player);
-    items.push_back(new Tank(this, 15, 40, false));
+    items.push_back(new Tank(this, 15, 40, true));
     score = 0;
-    bullet_count = 10;
-    bullet_timer = 40;
     srand(time(0));
 }
 
 void Game::add_bullet(size_t r, size_t c, Direction d, char *source) {
     d = d == NoneDirection ? Up : d;
-    if (bullet_count > 0 && strcmp(source, "Player") == 0) {
-        bullet_count--;
-        items.push_back(new Bullet(r, c, this, d, source));
-    } else if (strcmp(source, "Tank") == 0) {
-        items.push_back(new Bullet(r, c, this, d, source));
-    }
+    items.push_back(new Bullet(r, c, this, d, source));
 }
 void Game::add_bomb(size_t r, size_t c) {
     items.push_back(new Bomb(this, r, c));
@@ -37,16 +30,8 @@ void Game::add_bomb(size_t r, size_t c) {
 
 void Game::update() {
     gui.clear();
-    gui.printMsg(2, 68, "Bullet", bullet_count);
+    gui.printMsg(2, 68, "Bullet", player->bullet_count);
     gui.printMsg(3, 68, "Score", score);
-
-    if (bullet_timer > 0) {
-        bullet_timer--;
-    } else {
-        bullet_timer = 40;
-        if (bullet_count < 20)
-            bullet_count++;
-    }
 
     int c = gui.get();
     list<Item *>::iterator bi = items.begin();
@@ -86,13 +71,13 @@ void Game::complete() {
         exit(0);
     }
     remove_all<Bullet>();
-    remove_all<Bomb>();
+    remove_all<Tank>();
 
     score = 0;
     player->row = 12;
     player->col = 25;
-    bullet_count = 20;
-    bullet_timer = 40;
+    player->bullet_count = 20;
+    player->bullet_timer = 40;
 }
 
 template <typename T> list<T *> Game::get_items() {
