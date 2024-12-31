@@ -1,0 +1,9 @@
+# 缩进宽度设置为 4
+IndentWidth: 4
+
+# 其他格式化选项（可选）
+Language: Cpp
+ColumnLimit: 80
+TabWidth: 4
+UseTab: Never
+AllowShortFunctionsOnASingleLine: Empty
