@@ -15,6 +15,7 @@ class Bomb : public Item {
         is_out = false;
         row = r;
         col = c;
+        dir = Down;
     }
     void update(int key) {
         auto pl = game->player;
@@ -23,7 +24,7 @@ class Bomb : public Item {
             is_out = true;
         }
         game->paintat(row, col, 'Q');
-        row += 1;
+        move();
         if (row >= MAX_ROW) {
             is_out = true;
         }

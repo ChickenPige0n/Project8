@@ -3,9 +3,11 @@
 #include "Bomb.h"
 #include "Game.h"
 #include "Item.h"
+#include "Constants.h"
 #include <cstdlib>
 
 class Tank : public LivingEntity {
+    Direction dir;
     bool is_super;
 
     // only for super.
@@ -22,33 +24,30 @@ class Tank : public LivingEntity {
     }
 
     void normal_update() {
-        int randomNumber = rand() % 4;
+        int randomNumber = rand() % 5;
         switch (randomNumber) {
         case 0:
-            if (col > 0) {
-                col--;
-            }
+            dir = Left;
             break;
         case 1:
-            if (col < 80) {
-                col++;
-            }
+            dir = Right;
             break;
         case 2:
-            if (row > 0) {
-                row--;
-            }
+            dir = Up;
             break;
         case 3:
-            if (row < 30) {
-                row++;
-            }
+            dir = Down;
+            break;
+        case 4:
+            dir = None;
             break;
         }
     }
+
     void super_update() {
         int randomNumber = rand();
-        if (randomNumber % 2) {
+        if (! randomNumber % 3) {
+            // 1/3 chance to follow player
             return;
         }
         auto p = game->player;
@@ -56,15 +55,15 @@ class Tank : public LivingEntity {
         auto y_diff = p->col - col;
         if (abs(x_diff) > abs(y_diff)) {
             if (x_diff > 0) {
-                row++;
+                dir = Down;
             } else {
-                row--;
+                dir = Up;
             }
         } else {
             if (y_diff > 0) {
-                col++;
+                dir = Right;
             } else {
-                col--;
+                dir = Left;
             }
         }
     }
@@ -72,17 +71,18 @@ class Tank : public LivingEntity {
     void update(int key) {
         if (is_out)
             return;
-
         is_super ? super_update() : normal_update();
-
+        move();
         int randomNumber = rand() % 99;
         if (randomNumber <= 2) {
             game->add_bomb(row, col);
         }
 
-        game->paintat(row, col - 1, 'C');
-        game->paintat(row, col, is_super ? 'X' : 'O');
-        game->paintat(row, col + 1, 'D');
+        auto color = is_super ? Gui::SuperTank : Gui::NormalTank;
+        game->paintat(row, col - 1, 'C', color);
+        game->paintat(row, col, is_super ? 'X' : 'O', color);
+        game->paintat(row, col + 1, 'D', color);
+        game->paintat(row - 1, col, health + '0', color);
     }
     bool out() {
         return is_out;

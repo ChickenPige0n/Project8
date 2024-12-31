@@ -3,23 +3,8 @@
 #include "Game.h"
 
 void Bullet::update(int key) {
-    switch (dir) {
-    case Up:
-        row--;
-        break;
-    case Down:
-        row++;
-        break;
-    case Left:
-        col--;
-        break;
-    case Right:
-        col++;
-        break;
-    case None:
-        break;
-    }
-    if (col > MAX_COL || row < 0 || row > MAX_ROW || col < MIN_COL) {
+    move();
+    if (col >= MAX_COL || row <= 0 || row >= MAX_ROW || col <= MIN_COL) {
         is_out = true;
         return;
     }

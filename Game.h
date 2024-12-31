@@ -48,5 +48,8 @@ class Game {
     void paintat(size_t ro, size_t cl, char c) {
         gui.paintat(ro, cl, c);
     }
+    void paintat(size_t ro, size_t cl, char c, Gui::Color color) {
+        gui.paintat(ro, cl, c, color);
+    }
 };
 #endif

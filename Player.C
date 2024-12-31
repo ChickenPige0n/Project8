@@ -43,28 +43,7 @@ void Player::update(int key) {
     default:
         break;
     }
-    // handle player movement
-    switch (dir) {
-    case Up:
-        if (row > 0)
-            row--;
-        break;
-    case Down:
-        if (row < MAX_ROW)
-            row++;
-        break;
-    case Left:
-        if (col > MIN_COL)
-            col--;
-        break;
-    case Right:
-        if (col < MAX_COL)
-            col++;
-        break;
-    case None:
-        break;
-    }
-
+    move();
     // handle shooting
     if (shoot == 1)
         game->add_bullet(row, col);

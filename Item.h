@@ -1,20 +1,12 @@
 #ifndef _ITEM_H_
 #define _ITEM_H_
+#include "Constants.h"
 #include "Game.h"
 #include <memory>
 // Item base class
 class Item {
-  protected:
-    char* type;
-    bool is_out;
   public:
-    enum Direction {
-        Up,
-        Down,
-        Left,
-        Right,
-        None
-    };
+    enum Direction { Up, Down, Left, Right, None };
     int row;
     int col;
     Game *game;
@@ -29,5 +21,32 @@ class Item {
     virtual bool out() {
         return false;
     }
+    void move() {
+        switch (dir) {
+        case Up:
+            if (row > MIN_ROW)
+                row--;
+            break;
+        case Down:
+            if (row < MAX_ROW)
+                row++;
+            break;
+        case Left:
+            if (col > MIN_COL)
+                col--;
+            break;
+        case Right:
+            if (col < MAX_COL)
+                col++;
+            break;
+        case None:
+            break;
+        }
+    }
+
+  protected:
+    Direction dir;
+    char *type;
+    bool is_out;
 };
 #endif
