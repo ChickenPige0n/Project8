@@ -1,5 +1,6 @@
 #ifndef _BOMB_H_
 #define _BOMB_H_
+#include "Constants.h"
 #include "Game.h"
 #include "Item.h"
 #include "Player.h"
@@ -19,11 +20,9 @@ class Bomb : public Item {
             is_out = true;
             game->complete();
         }
-        if (row > 1) {
-            game->paintat(row, col, 'Q');
-            row += 1;
-        }
-        if (row >= 30) {
+        game->paintat(row, col, 'Q');
+        row += 1;
+        if (row >= MAX_ROW) {
             is_out = true;
         }
     }
