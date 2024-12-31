@@ -25,7 +25,7 @@ class Bomb : public Item {
             pl->hit(1);
             is_out = true;
         }
-        game->paintat(row, col, 'Q');
+        game->paintat(row, col, 'Q', Gui::Color::SuperTank);
         move();
         if (row >= MAX_ROW) {
             is_out = true;

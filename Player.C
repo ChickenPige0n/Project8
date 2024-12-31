@@ -58,7 +58,7 @@ void Player::update(int key) {
         bullet_count--;
         game->add_bullet(row, col, dir, get_type());
     }
-    game->paintat(row, col, 'M');
+    game->paintat(row, col, 'M', Gui::Player);
     int len = (health / 10.) * (MAX_COL - MIN_COL - 1);
     for (int i = 0; i < len; i++) {
         game->paintat(0, MIN_COL + i + 1, '+');

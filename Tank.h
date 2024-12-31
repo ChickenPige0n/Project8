@@ -8,6 +8,7 @@
 
 class Tank : public LivingEntity {
     bool is_super;
+    static int tank_unshown;
 
     // only for super.
     // max value
@@ -18,8 +19,17 @@ class Tank : public LivingEntity {
     char *get_type() override {
         return "Tank";
     }
+    static void init() {
+        tank_unshown = 20;
+    }
     Tank(Game *g, int r, int c, bool is_super)
         : LivingEntity(r, c, g, NoneDirection), is_super(is_super) {
+        tank_unshown--;
+        if (tank_unshown % 4 == 0) {
+            is_super = true;
+        } else {
+            is_super = false;
+        }
         is_out = false;
         health = is_super ? 4 : 1;
     }
@@ -46,10 +56,23 @@ class Tank : public LivingEntity {
     }
 
     void super_update() {
+        if (mine_timer > 0) {
+            mine_timer--;
+        } else {
+            mine_timer = 100;
+            if (mine_count < 10)
+                mine_count++;
+        }
         int randomNumber = rand();
-        if (randomNumber % 3) {
+        if (randomNumber % 3 != 0) {
+            dir = NoneDirection;
             // 1/3 chance to follow player
             return;
+        }
+        randomNumber = rand();
+        if (randomNumber % 10 == 0 && mine_count > 0) {
+            game->add_mine(row, col);
+            mine_count--;
         }
         auto p = game->player;
         auto x_diff = p->row - row;

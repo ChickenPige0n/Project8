@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "LivingEntity.h"
+#include "Mine.h"
 #include "Player.h"
 #include "Tank.h"
 #include <cstdlib>
@@ -12,10 +13,10 @@
 #include <memory>
 #include <unistd.h>
 Game::Game() {
+    Tank::init();
     gui.init();
     player = new Player(this);
     items.push_back(player);
-    items.push_back(new Tank(this, 15, 40, true));
     score = 0;
     srand(time(0));
 }
@@ -26,6 +27,9 @@ void Game::add_bullet(size_t r, size_t c, Direction d, char *source) {
 }
 void Game::add_bomb(size_t r, size_t c) {
     items.push_back(new Bomb(this, r, c));
+}
+void Game::add_mine(size_t r, size_t c) {
+    items.push_back(new Mine(this, r, c));
 }
 
 void Game::update() {
@@ -72,10 +76,12 @@ void Game::complete() {
     }
     remove_all<Bullet>();
     remove_all<Tank>();
+    remove_all<Mine>();
 
     score = 0;
     player->row = 12;
     player->col = 25;
+    player->heal(10);
     player->bullet_count = 20;
     player->bullet_timer = 40;
 }

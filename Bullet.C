@@ -12,7 +12,7 @@ void Bullet::update(int key) {
         is_out = true;
         return;
     }
-    game->paintat(row, col, '*');
+    game->paintat(row, col, '*', Gui::Bullet);
 }
 
 bool Bullet::out() {

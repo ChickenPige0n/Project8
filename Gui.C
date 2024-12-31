@@ -34,6 +34,10 @@ void Gui::paintat(size_t rw, size_t cl, char c) {
 }
 
 void Gui::paintat(size_t rw, size_t cl, char c, Color color) {
+    if (!colored) {
+        paintat(rw, cl, c);
+        return;
+    }
     attron(COLOR_PAIR(color));
     mvwaddch(win, rw, cl, c);
     attroff(COLOR_PAIR(color));

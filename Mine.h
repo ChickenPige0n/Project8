@@ -1,5 +1,5 @@
-#ifndef _BOMB_H_
-#define _BOMB_H_
+#ifndef _MINE_H_
+#define _MINE_H_
 #include "Game.h"
 #include "Item.h"
 #include "Player.h"
@@ -7,7 +7,6 @@
 #include <cstddef>
 #include <cstdlib>
 class Mine : public Item {
-
   public:
     char *get_type() override {
         return "Mine";
@@ -18,8 +17,9 @@ class Mine : public Item {
         col = c;
     }
     void update(int key) {
+        game->paintat(row, col, '#', Gui::Color::SuperTank);
         auto pl = game->player;
-        if (abs(pl->row -= row) <= 1 && abs(pl->col == col) <= 1) {
+        if (abs(pl->row - row) <= 1 && abs(pl->col - col) <= 1) {
             is_out = true;
             pl->hit(5);
         }
