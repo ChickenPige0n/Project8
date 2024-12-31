@@ -12,6 +12,7 @@ class Player : public Item {
         col = MAX_COL / 2;
         dir = None;
     }
+    Direction get_dir();
     bool out() override {
         return false;
     }

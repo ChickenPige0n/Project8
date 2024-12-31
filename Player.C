@@ -71,3 +71,7 @@ void Player::update(int key) {
 
     game->paintat(row, col, 'M');
 }
+
+Item::Direction Player::get_dir() {
+    return dir;
+}
