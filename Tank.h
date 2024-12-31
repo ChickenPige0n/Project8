@@ -5,12 +5,12 @@
 #include "Item.h"
 #include <cstdlib>
 class Tank : public Item {
-    bool is_out;
     bool is_super;
 
   public:
-    Tank(Game *g, int r, int c) : Item(g), is_out(false) {
+    Tank(Game *g, int r, int c) : Item(g) {
         type = "Tank";
+        is_out = false;
         row = r;
         col = c;
     }
@@ -46,7 +46,7 @@ class Tank : public Item {
         }        
 
         randomNumber = rand() % 99;
-        if (randomNumber <= 20) {
+        if (randomNumber <= 2) {
             game->add_bomb(row, col);
         }
 

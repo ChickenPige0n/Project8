@@ -7,7 +7,6 @@
 #include <cmath>
 #include <cstddef>
 class Bomb : public Item {
-    bool is_out;
 
   public:
     // stage from 4 to 66

@@ -48,8 +48,8 @@ void Game::update() {
     int c = gui.get();
     list<Item *>::iterator bi = items.begin();
     while (bi != items.end()) {
-        if (!(*bi)) bi++;
         (*bi)->update(c);
+
         if ((*bi)->out()) {
             delete *bi;
             bi = items.erase(bi);
@@ -101,15 +101,13 @@ template <typename T> list<T *> Game::get_items() {
     }
     return selected;
 }
+
 template <typename T> void Game::remove_all() {
     auto ii = items.begin();
     while (ii != items.end()) {
         if (typeid(**ii) == typeid(T)) {
-            delete *ii;
-            *ii = nullptr;
-            ii = items.erase(ii);
-        } else {
-            ii++;
+            (*ii)->queue_delete();
         }
+        ii++;
     }
 }

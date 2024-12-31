@@ -7,7 +7,6 @@
 #include <cstddef>
 #include <cstdlib>
 class Mine : public Item {
-    bool is_out;
 
   public:
     // stage from 4 to 66

@@ -5,7 +5,6 @@
 #include <memory>
 
 class Bullet : public Item {
-    bool is_out;
     Direction dir;
   public:
     Bullet(size_t r, size_t c, Game *game, Direction d) : Item(game), dir(d) {

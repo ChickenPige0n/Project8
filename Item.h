@@ -6,6 +6,7 @@
 class Item {
   protected:
     char* type;
+    bool is_out;
   public:
     enum Direction {
         Up,
@@ -18,6 +19,9 @@ class Item {
     int col;
     Game *game;
     Item(Game *g) : game(g) {}
+    void queue_delete() {
+        is_out = true;
+    }
     virtual ~Item() = default;
     virtual void update(int key) {
         return;
