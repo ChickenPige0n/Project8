@@ -10,6 +10,7 @@ class Tank : public Item {
 
   public:
     Tank(Game *g, int r, int c) : Item(g), is_out(false) {
+        type = "Tank";
         row = r;
         col = c;
     }

@@ -8,6 +8,7 @@ class Player : public Item {
     Direction dir;
   public:
     Player(Game *g) : Item(g) {
+        type = "Player";
         row = MAX_ROW / 2;
         col = MAX_COL / 2;
         dir = None;

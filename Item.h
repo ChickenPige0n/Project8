@@ -4,6 +4,8 @@
 #include <memory>
 // Item base class
 class Item {
+  protected:
+    char* type;
   public:
     enum Direction {
         Up,
