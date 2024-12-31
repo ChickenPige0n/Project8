@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "HealthPack.h"
+#include "Laser.h"
 #include "LivingEntity.h"
 #include "Mine.h"
 #include "Player.h"
@@ -18,7 +19,7 @@ Game::Game() : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
     int size_c = MAX_COL + 4;
     for (int r = 0; r < size_r; r++) {
         for (int c = 0; c < size_c; c++) {
-            obstacle_grid.set(r, c, rand() % 100 < 2);
+            obstacle_grid.set(r, c, rand() % 140 < 1);
         }
     }
 
@@ -39,6 +40,9 @@ void Game::add_bomb(size_t r, size_t c) {
 }
 void Game::add_mine(size_t r, size_t c) {
     items.push_back(new Mine(this, r, c));
+}
+void Game::add_laser(size_t r, size_t c, Direction d) {
+    items.push_back(new Laser(r, c, this, d));
 }
 
 void Game::update() {
@@ -87,7 +91,7 @@ bool Game::query_hit(Bullet *bullet) {
     for (auto enitiy : get_items<LivingEntity>()) {
         int width = strcmp(enitiy->get_type(), "Player") == 0 ? 1 : 2;
         if (bullet->row == enitiy->row &&
-            abs((int)bullet->col - (int)enitiy->col) < width) {
+            abs(bullet->col - enitiy->col) < width) {
             if (strcmp(bullet->damageSource, "Player") == 0)
                 score += 100;
             enitiy->hit(1);
@@ -97,6 +101,26 @@ bool Game::query_hit(Bullet *bullet) {
     return false;
 }
 
+bool Game::query_hit(Laser *laser, int row, int col) {
+    for (auto enitiy : get_items<LivingEntity>()) {
+        auto etype = enitiy->get_type();
+        int width = strcmp(etype, "Player") == 0 ? 1 : 2;
+        if (row == enitiy->row && abs(col - enitiy->col) < width) {
+            if (strcmp(etype, "Player") == 0) {
+                enitiy->hit(3);
+            } else {
+                if (auto t = dynamic_cast<Tank *>(enitiy)) {
+                    if (t->isLaser()) {
+                        continue;
+                    }
+                    enitiy->hit(2);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+}
 void Game::complete() {
     gui.clear();
     gui.printMsg(10, 25, "Game ended, score:", score);

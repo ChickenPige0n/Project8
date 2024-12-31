@@ -7,6 +7,7 @@
 #include <cmath>
 #include <list>
 using namespace std;
+class Laser;
 class Item;
 class Tank;
 class Bullet;
@@ -35,6 +36,7 @@ class Game {
         gui.end();
     }
     bool query_hit(Bullet *bullet);
+    bool query_hit(Laser *laser, int row, int col);
 
     template <typename T> list<T *> get_items();
     template <typename T> void remove_all();
@@ -42,6 +44,7 @@ class Game {
     void add_bullet(size_t r, size_t c, Direction d, char *source);
     void add_bomb(size_t r, size_t c);
     void add_mine(size_t r, size_t c);
+    void add_laser(size_t r, size_t c, Direction d);
     void update();
     void complete();
     void paintat(size_t ro, size_t cl, char c) {

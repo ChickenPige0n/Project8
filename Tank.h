@@ -7,6 +7,7 @@
 #include <cstdlib>
 class Tank : public LivingEntity {
     bool is_super;
+    bool is_laser;
     static int tank_num_left;
 
     // only for super.
@@ -18,6 +19,9 @@ class Tank : public LivingEntity {
     char *get_type() override {
         return "Tank";
     }
+    bool isLaser() {
+        return is_laser;
+    }
     static void init() {
         tank_num_left = 20;
     }
@@ -26,11 +30,12 @@ class Tank : public LivingEntity {
     }
     Tank(Game *g, int r, int c, bool is_super)
         : LivingEntity(r, c, g, NoneDirection), is_super(is_super) {
-        if (tank_num_left % 4 == 0) {
-            this->is_super = true;
-        } else {
-            this->is_super = false;
+        this->is_super = tank_num_left % 4 == 0;
+        is_laser = tank_num_left % 10 == 0;
+        if (is_laser) {
+            is_super = true;
         }
+
         tank_num_left--;
         is_out = false;
         max_health = this->is_super ? 4 : 1;
@@ -104,6 +109,11 @@ class Tank : public LivingEntity {
         if (is_out)
             return;
         is_super ? super_update() : normal_update();
+
+        if (is_laser && rand() % 100 <= 5) {
+            game->add_laser(row, col, dir);
+        }
+
         move();
         int randomNumber = rand() % 99;
         if (randomNumber <= 2) {
