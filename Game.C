@@ -13,6 +13,7 @@ Game::Game() {
     gui.init();
     player = new Player(this);
     items.push_back(player);
+    items.push_back(new Tank(this, 15, 40));
     score = 0;
     bullet_count = 10;
     bullet_timer = 40;
@@ -22,7 +23,9 @@ Game::Game() {
 void Game::add_bullet(size_t r, size_t c) {
     if (bullet_count > 0) {
         bullet_count--;
-        items.push_back(new Bullet(r, c, this));
+        auto dir = player->get_dir();
+        dir = dir == Item::None ? Item::Up : dir;
+        items.push_back(new Bullet(r, c, this, Item::Up));
     }
 }
 void Game::add_bomb(size_t r, size_t c) {
@@ -45,6 +48,7 @@ void Game::update() {
     int c = gui.get();
     list<Item *>::iterator bi = items.begin();
     while (bi != items.end()) {
+        if (!(*bi)) bi++;
         (*bi)->update(c);
         if ((*bi)->out()) {
             delete *bi;
@@ -56,7 +60,7 @@ void Game::update() {
 }
 
 bool Game::query_hit(Bullet *bullet) {
-    for (auto tank : tanks) {
+    for (auto tank : get_items<Tank>()) {
         if (bullet->row == tank->row &&
             abs((int)bullet->col - (int)tank->col) < 2) {
             score += 100;
@@ -86,12 +90,12 @@ void Game::complete() {
     bullet_timer = 40;
 }
 
-template <typename T> list<T *>* Game::get_items() {
-    auto selected = new list<T *>();
+template <typename T> list<T *> Game::get_items() {
+    auto selected = list<T *>();
     auto ii = items.begin();
     while (ii != items.end()) {
         if (typeid(**ii) == typeid(T)) {
-            selected->push_front(dynamic_cast<T *>(*ii));
+            selected.push_front(dynamic_cast<T *>(*ii));
         }
         ii++;
     }
@@ -102,6 +106,7 @@ template <typename T> void Game::remove_all() {
     while (ii != items.end()) {
         if (typeid(**ii) == typeid(T)) {
             delete *ii;
+            *ii = nullptr;
             ii = items.erase(ii);
         } else {
             ii++;
