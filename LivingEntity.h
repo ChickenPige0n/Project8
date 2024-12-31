@@ -24,6 +24,9 @@ class LivingEntity : public Item {
 			is_out = true;
 		}
 	}
+	int get_health() {
+		return health;
+	}
 
 	void heal(int amount) {
 		health += amount;

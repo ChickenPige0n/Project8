@@ -19,7 +19,7 @@ class Mine : public Item {
         auto pl = game->player;
         if (abs(pl->row -= row) <= 1 && abs(pl->col == col) <= 1){
             is_out = true;
-            pl->hit(1);
+            pl->hit(ceil(pl->get_health() / 2));
         }
     }
     bool out() {

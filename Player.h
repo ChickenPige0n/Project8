@@ -10,6 +10,7 @@ class Player : public LivingEntity {
   public:
     Player(Game *g) : LivingEntity(MAX_ROW / 2, MAX_COL / 2, g, None) {
         type = "Player";
+        health = 10;
     }
     Direction get_dir();
     bool out() override {
