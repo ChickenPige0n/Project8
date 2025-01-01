@@ -26,7 +26,7 @@ class HealthPack : public Item {
             is_out = true;
             return;
         }
-        game->paintat(row, col, '+', Gui::Color::SuperTank);
+        game->paintat(row, col, '+', Gui::Color::Player);
         auto pl = game->player;
         if (abs(pl->row - row) <= 1 && abs(pl->col - col) <= 1) {
             is_out = true;
