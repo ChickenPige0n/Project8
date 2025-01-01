@@ -32,6 +32,9 @@ class Item {
                 }
                 row--;
             }
+            if (row == MIN_ROW) {
+                dir = NoneDirection;
+            }
             break;
         case Down:
             if (row < MAX_ROW) {
@@ -40,6 +43,9 @@ class Item {
                     return;
                 }
                 row++;
+            }
+            if (row == MAX_ROW) {
+                dir = NoneDirection;
             }
             break;
         case Left:
@@ -50,6 +56,9 @@ class Item {
                 }
                 col--;
             }
+            if (col == MIN_COL) {
+                dir = NoneDirection;
+            }
             break;
         case Right:
             if (col < MAX_COL) {
@@ -58,6 +67,9 @@ class Item {
                     return;
                 }
                 col++;
+            }
+            if (col == MAX_COL) {
+                dir = NoneDirection;
             }
             break;
         case NoneDirection:

@@ -48,24 +48,7 @@ class Tank : public LivingEntity {
             dir = NoneDirection;
             return;
         }
-        randomNumber = rand() % 5;
-        switch (randomNumber) {
-        case 0:
-            dir = Left;
-            break;
-        case 1:
-            dir = Right;
-            break;
-        case 2:
-            dir = Up;
-            break;
-        case 3:
-            dir = Down;
-            break;
-        case 4:
-            dir = NoneDirection;
-            break;
-        }
+        dir = Direction(rand() % 5);
     }
 
     void super_update() {
