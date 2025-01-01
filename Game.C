@@ -31,8 +31,8 @@ Game::Game(bool read_map) : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
     } else {
         fstream file("Map1.tkm");
         char ch;
-        for (int r = 0; r < MAX_ROW - MIN_ROW; r++) {
-            for (int c = 0; c < MAX_COL - MIN_COL; c++) {
+        for (int r = 0; r < MAX_ROW - MIN_ROW + 1; r++) {
+            for (int c = 0; c < MAX_COL - MIN_COL + 1; c++) {
                 file >> ch;
                 int index = 0;
                 switch (ch) {
