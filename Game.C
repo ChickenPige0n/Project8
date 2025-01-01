@@ -130,6 +130,7 @@ void Game::update() {
             }
         }
     }
+    gui.redraw();
 }
 
 bool Game::query_hit(Bullet *bullet) {
@@ -170,6 +171,7 @@ void Game::complete(bool win) {
     gui.clear();
     gui.printMsg(9, 30, win ? "YOU WIN" : "YOU LOST");
     gui.printMsg(10, 25, "Game ended, score:", score);
+    gui.redraw();
     usleep(3000000);
     int c = gui.get();
     if (c == 'q') {

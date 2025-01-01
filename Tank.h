@@ -43,12 +43,16 @@ class Tank : public LivingEntity {
     }
 
     void normal_update() {
-        int randomNumber = rand() % 3;
-        if (randomNumber != 0) {
-            dir = NoneDirection;
+        int rn = rand() % 10;
+        if (rn >= 0 && rn <= 6)
             return;
-        }
-        dir = Direction(rand() % 5);
+        if (rn == 7)
+            dir = Direction((dir + 1) % 4);
+        if (rn == 8)
+            dir = Direction((dir + 1) % 4);
+        if (rn == 9)
+            dir = Direction((dir + 2) % 4);
+        // dir = Direction();
     }
 
     void super_update() {
@@ -114,7 +118,7 @@ class Tank : public LivingEntity {
         game->paintat(row, col - 1, 'C', color);
         game->paintat(row, col, 'E' - health, color);
         game->paintat(row, col + 1, 'D', color);
-        game->paintat(row - 1, col, is_super ? '!' : ' ', color);
+        is_super ? game->paintat(row - 1, col, '!') : void();
     }
     bool out() {
         return is_out;

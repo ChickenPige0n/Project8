@@ -33,7 +33,6 @@ int Gui::get() {
 
 void Gui::paintat(size_t rw, size_t cl, char c) {
     mvwaddch(win, rw, cl, c);
-    wrefresh(win);
     return;
 }
 
@@ -45,7 +44,6 @@ void Gui::paintat(size_t rw, size_t cl, char c, Color color) {
     attron(COLOR_PAIR(color));
     mvwaddch(win, rw, cl, c);
     attroff(COLOR_PAIR(color));
-    wrefresh(win);
     return;
 }
 
@@ -54,11 +52,9 @@ void Gui::printMsg(int row, int col, const char *prompt, int v) {
     char s[32];
     sprintf(s, "%d", v);
     mvwprintw(win, row, col + strlen(prompt) + 1, s);
-    wrefresh(win);
 }
 void Gui::printMsg(int row, int col, const char *prompt) {
     mvwprintw(win, row, col, prompt);
-    wrefresh(win);
 }
 
 void Gui::clear() {
@@ -71,4 +67,7 @@ void Gui::clear() {
     for (int i = MIN_COL; i <= MAX_COL; i++) {
         mvaddch(MAX_ROW + 1, i, '-');
     }
+}
+void Gui::redraw() {
+    wrefresh(win);
 }

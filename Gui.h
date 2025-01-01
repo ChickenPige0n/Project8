@@ -16,7 +16,7 @@ class Gui {
             start_color();
             init_pair(1, COLOR_YELLOW, COLOR_GREEN); // normal tank
             init_pair(2, COLOR_CYAN, COLOR_BLUE);    // super tank
-            init_pair(3, COLOR_BLACK, COLOR_WHITE);  // player
+            init_pair(3, COLOR_RED, COLOR_WHITE);    // player
             init_pair(4, COLOR_RED, COLOR_MAGENTA);  // bullet
         }
         init();
@@ -31,6 +31,7 @@ class Gui {
     void printMsg(int row, int col, const char *prompt, int v);
     void printMsg(int row, int col, const char *prompt);
     void clear();
+    void redraw();
     void end() {
         endwin();
     }
