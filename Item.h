@@ -67,6 +67,9 @@ class Item {
     virtual char *get_type() {
         return "Item";
     }
+    Direction get_dir() {
+        return dir;
+    }
 
   protected:
     Direction dir;

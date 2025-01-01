@@ -72,7 +72,3 @@ void Player::reset() {
     bullet_count = 10;
     bullet_timer = 40;
 }
-
-Direction Player::get_dir() {
-    return dir;
-}

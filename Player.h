@@ -28,7 +28,6 @@ class Player : public LivingEntity {
         bullet_count = 10;
         bullet_timer = 40;
     }
-    Direction get_dir();
     bool out() override {
         return false;
     }
