@@ -21,6 +21,13 @@ class Player : public LivingEntity {
         bullet_count = 10;
         bullet_timer = 40;
     }
+    Player(Game *g, int row, int col)
+        : LivingEntity(row, col, g, NoneDirection) {
+        max_health = 10;
+        health = max_health;
+        bullet_count = 10;
+        bullet_timer = 40;
+    }
     Direction get_dir();
     bool out() override {
         return false;

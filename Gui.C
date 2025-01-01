@@ -16,9 +16,12 @@ void Gui::init() {
     keypad(win, true);
     nodelay(win, true);
     flushinp();
-    for (int i = 0; i < 30; i++) {
-        mvaddch(i, MIN_COL, '|');
-        mvaddch(i, MAX_COL, '|');
+    for (int i = MIN_ROW; i <= MAX_ROW; i++) {
+        mvaddch(i, MIN_COL - 1, '|');
+        mvaddch(i, MAX_COL + 1, '|');
+    }
+    for (int i = MIN_COL; i <= MAX_COL; i++) {
+        mvaddch(MAX_ROW + 1, i, '-');
     }
 }
 
@@ -46,19 +49,26 @@ void Gui::paintat(size_t rw, size_t cl, char c, Color color) {
     return;
 }
 
-void Gui::printMsg(int row, int col, char *prompt, int v) {
+void Gui::printMsg(int row, int col, const char *prompt, int v) {
     mvwprintw(win, row, col, prompt);
     char s[32];
     sprintf(s, "%d", v);
     mvwprintw(win, row, col + strlen(prompt) + 1, s);
     wrefresh(win);
 }
+void Gui::printMsg(int row, int col, const char *prompt) {
+    mvwprintw(win, row, col, prompt);
+    wrefresh(win);
+}
 
 void Gui::clear() {
     werase(win);
 
-    for (int i = 0; i < 30; i++) {
-        mvaddch(i, MIN_COL, '|');
-        mvaddch(i, MAX_COL, '|');
+    for (int i = MIN_ROW; i <= MAX_ROW; i++) {
+        mvaddch(i, MIN_COL - 1, '|');
+        mvaddch(i, MAX_COL + 1, '|');
+    }
+    for (int i = MIN_COL; i <= MAX_COL; i++) {
+        mvaddch(MAX_ROW + 1, i, '-');
     }
 }

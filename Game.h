@@ -4,6 +4,7 @@
 #include "Constants.h"
 #include "Direction.h"
 #include "Gui.h"
+#include <array>
 #include <cmath>
 #include <list>
 using namespace std;
@@ -18,15 +19,18 @@ class Bomb;
 // 1 player
 class Game {
     Gui gui;
+    array<array<int, 2>, 20> spawn_points;
+    array<int, 2> player_ori;
     list<Item *> items;
     list<Tank *> tanks;
     int score;
+    bool read_map;
 
   public:
     BitGrid obstacle_grid;
     Player *player;
 
-    Game();
+    Game(bool read_map = false);
     ~Game() {
         auto ii = items.begin();
         while (ii != items.end()) {
@@ -46,7 +50,7 @@ class Game {
     void add_mine(size_t r, size_t c);
     void add_laser(size_t r, size_t c, Direction d);
     void update();
-    void complete();
+    void complete(bool win);
     void paintat(size_t ro, size_t cl, char c) {
         gui.paintat(ro, cl, c);
     }

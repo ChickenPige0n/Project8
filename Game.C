@@ -11,21 +11,55 @@
 #include <cstring>
 #include <ctime>
 #include <curses.h>
+#include <fstream>
 #include <math.h>
 #include <memory>
 #include <unistd.h>
-Game::Game() : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
+
+Game::Game(bool read_map) : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
+    this->read_map = read_map;
     int size_r = MAX_ROW + 4;
     int size_c = MAX_COL + 4;
-    for (int r = 0; r < size_r; r++) {
-        for (int c = 0; c < size_c; c++) {
-            obstacle_grid.set(r, c, rand() % 140 < 1);
+    if (!read_map) {
+        player = new Player(this);
+        for (int r = 0; r < size_r; r++) {
+            for (int c = 0; c < size_c; c++) {
+                obstacle_grid.set(r, c, rand() % 140 < 1);
+            }
+        }
+
+    } else {
+        fstream file("Map1.tkm");
+        char ch;
+        for (int r = 0; r < MAX_ROW - MIN_ROW; r++) {
+            for (int c = 0; c < MAX_COL - MIN_COL; c++) {
+                file >> ch;
+                int index = 0;
+                switch (ch) {
+                case '#':
+                    obstacle_grid.set(MIN_ROW + r, MIN_COL + c, ch == '#');
+                    break;
+                case 'P':
+                    player = new Player(this, MIN_ROW + r, MIN_COL + c);
+                    player_ori[0] = MIN_ROW + r;
+                    player_ori[1] = MIN_COL + c;
+                    break;
+                }
+                if (ch <= '9' && ch >= '0') {
+                    index = ch - '0';
+                    spawn_points[index][0] = MIN_ROW + r;
+                    spawn_points[index][1] = MIN_COL + c;
+                }
+                if (ch <= 'j' && ch >= 'a') {
+                    index = ch - 'a' + 10;
+                    spawn_points[index][0] = MIN_ROW + r;
+                    spawn_points[index][1] = MIN_COL + c;
+                }
+            }
         }
     }
-
     Tank::init();
     gui.init();
-    player = new Player(this);
     items.push_back(player);
     score = 0;
     srand(time(0));
@@ -49,12 +83,23 @@ void Game::update() {
     gui.clear();
     gui.printMsg(2, 68, "Bullet", player->bullet_count);
     gui.printMsg(3, 68, "Score", score);
-    auto tank_num_left = Tank::get_num_left();
-    gui.printMsg(4, 68, "Tank Left", tank_num_left + get_items<Tank>().size());
+    int tank_tobe_shown = Tank::get_num_left();
+    int tank_left = tank_tobe_shown + get_items<Tank>().size();
+    gui.printMsg(4, 68, "Tank Left", tank_left);
+    if (tank_left == 0) {
+        complete(true);
+    }
 
-    if (get_items<Tank>().size() < 4 && tank_num_left > 0) {
-        int row = rand() % (MAX_ROW - MIN_ROW - 10) + 5;
-        int col = rand() % (MAX_COL - MIN_COL - 20) + 10;
+    if (get_items<Tank>().size() < 4 && tank_tobe_shown > 0) {
+        int row;
+        int col;
+        if (!read_map) {
+            row = rand() % (MAX_ROW - MIN_ROW - 10) + 5;
+            col = rand() % (MAX_COL - MIN_COL - 20) + 10;
+        } else {
+            row = spawn_points[tank_tobe_shown - 1][0];
+            col = spawn_points[tank_tobe_shown - 1][1];
+        }
         items.push_back(new Tank(this, row, col, true));
     }
 
@@ -121,8 +166,9 @@ bool Game::query_hit(Laser *laser, int row, int col) {
         return false;
     }
 }
-void Game::complete() {
+void Game::complete(bool win) {
     gui.clear();
+    gui.printMsg(9, 30, win ? "YOU WIN" : "YOU LOST");
     gui.printMsg(10, 25, "Game ended, score:", score);
     usleep(3000000);
     int c = gui.get();
@@ -136,6 +182,8 @@ void Game::complete() {
     Tank::init();
     score = 0;
     player->reset();
+    player->row = player_ori[0];
+    player->col = player_ori[1];
 }
 
 template <typename T> list<T *> Game::get_items() {

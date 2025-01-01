@@ -28,7 +28,8 @@ class Gui {
     int get();
     void paintat(size_t, size_t, char);
     void paintat(size_t, size_t, char, Color);
-    void printMsg(int row, int col, char *prompt, int v);
+    void printMsg(int row, int col, const char *prompt, int v);
+    void printMsg(int row, int col, const char *prompt);
     void clear();
     void end() {
         endwin();

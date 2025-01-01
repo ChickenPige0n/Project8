@@ -33,7 +33,7 @@ class Tank : public LivingEntity {
         this->is_super = tank_num_left % 4 == 0;
         is_laser = tank_num_left % 10 == 0;
         if (is_laser) {
-            is_super = true;
+            this->is_super = true;
         }
 
         tank_num_left--;

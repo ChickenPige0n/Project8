@@ -17,7 +17,7 @@ int main() {
     gettimeofday(&time_now, NULL);
     time_t oldTime = (time_now.tv_sec * 1000) + (time_now.tv_usec / 1000);
     time_t currentTime = oldTime;
-    Game game;
+    Game game(true);
     while (true) {
         gettimeofday(&time_now, NULL);
         currentTime = (time_now.tv_sec * 1000) + (time_now.tv_usec / 1000);

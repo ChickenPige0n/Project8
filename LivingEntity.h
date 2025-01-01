@@ -24,7 +24,7 @@ class LivingEntity : public Item {
         health -= damage;
         if (health <= 0) {
             if (strcmp(get_type(), "Player") == 0) {
-                game->complete();
+                game->complete(false);
             }
             is_out = true;
         }
