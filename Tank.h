@@ -43,6 +43,7 @@ class Tank : public LivingEntity {
     }
 
     void normal_update() {
+        dir = dir == NoneDirection ? Up : dir;
         int rn = rand() % 10;
         if (rn >= 0 && rn <= 6)
             return;
