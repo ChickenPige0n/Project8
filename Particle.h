@@ -14,8 +14,8 @@ class Particle : public Item {
         row = r;
         col = c;
         timer = 6;
-        dx = rand() % 3 - 1;
-        dy = rand() % 3 - 1;
+        dx = rand() % 2 == 0 ? 1 : -1;
+        dy = rand() % 2 == 0 ? 1 : -1;
     }
     void update(int key) override {
         if (timer <= 0 || (row >= MAX_ROW || row <= MIN_ROW || col >= MAX_COL ||

@@ -28,6 +28,7 @@ void Gui::init() {
 void Gui::shake() {
     render_shift[0] = rand() % 5 - 2;
     render_shift[1] = rand() % 5 - 2;
+    render_shift[1] = render_shift[0] == 0 && render_shift[1] == 0 ? 2 : 0;
 }
 
 int Gui::get() {

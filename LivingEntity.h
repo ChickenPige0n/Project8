@@ -23,7 +23,7 @@ class LivingEntity : public Item {
     virtual void hit(int damage) {
         health -= damage;
         for (int i = 0; i < 3; i++) {
-            game->add_particle(row, col, '.');
+            game->add_particle(row, col, '*');
         }
         if (health <= 0) {
             if (strcmp(get_type(), "Player") == 0) {
