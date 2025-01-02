@@ -75,6 +75,11 @@ void Game::add_bomb(size_t r, size_t c) {
     items.push_back(new Bomb(this, r, c));
 }
 void Game::add_mine(size_t r, size_t c) {
+    auto mlist = get_items<Mine>();
+    for (auto mine : mlist) {
+        if (mine->row == r && mine->col == c)
+            return;
+    }
     items.push_back(new Mine(this, r, c));
 }
 void Game::add_laser(size_t r, size_t c, Direction d) {
