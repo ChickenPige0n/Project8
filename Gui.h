@@ -1,10 +1,12 @@
 #ifndef _GUI_H_
 #define _GUI_H_
+#include <array>
 #include <ncurses.h>
 
 class Gui {
     size_t row;
     size_t col;
+    std::array<int, 2> render_shift;
     WINDOW *win;
     bool colored;
 
@@ -14,9 +16,9 @@ class Gui {
         colored = has_colors();
         if (colored) {
             start_color();
-            init_pair(1, COLOR_YELLOW, COLOR_GREEN); // normal tank
+            init_pair(1, COLOR_RED, COLOR_WHITE);    // player
             init_pair(2, COLOR_CYAN, COLOR_BLUE);    // super tank
-            init_pair(3, COLOR_RED, COLOR_WHITE);    // player
+            init_pair(3, COLOR_YELLOW, COLOR_GREEN); // normal tank
             init_pair(4, COLOR_RED, COLOR_MAGENTA);  // bullet
         }
         init();
@@ -26,6 +28,7 @@ class Gui {
     }
     void init();
     int get();
+    void shake();
     void paintat(size_t, size_t, char);
     void paintat(size_t, size_t, char, Color);
     void printMsg(int row, int col, const char *prompt, int v);

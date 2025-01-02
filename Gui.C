@@ -1,5 +1,6 @@
 #include "Constants.h"
 #include "Gui.h"
+#include <cstdlib>
 #include <cstring>
 #include <ncurses.h>
 using namespace std;
@@ -24,6 +25,10 @@ void Gui::init() {
         mvaddch(MAX_ROW + 1, i, '-');
     }
 }
+void Gui::shake() {
+    render_shift[0] = rand() % 5 - 2;
+    render_shift[1] = rand() % 5 - 2;
+}
 
 int Gui::get() {
     int c = wgetch(win);
@@ -32,11 +37,15 @@ int Gui::get() {
 }
 
 void Gui::paintat(size_t rw, size_t cl, char c) {
+    rw += render_shift[0];
+    cl += render_shift[1];
     mvwaddch(win, rw, cl, c);
     return;
 }
 
 void Gui::paintat(size_t rw, size_t cl, char c, Color color) {
+    rw += render_shift[0];
+    cl += render_shift[1];
     if (!colored) {
         paintat(rw, cl, c);
         return;
@@ -70,4 +79,14 @@ void Gui::clear() {
 }
 void Gui::redraw() {
     wrefresh(win);
+    auto reduce = [](int value) -> int {
+        if (value > 0) {
+            return value - 1;
+        } else if (value < 0) {
+            return value + 1;
+        }
+        return 0;
+    };
+    render_shift[0] = reduce(render_shift[0]);
+    render_shift[1] = reduce(render_shift[1]);
 }

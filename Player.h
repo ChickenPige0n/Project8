@@ -28,6 +28,10 @@ class Player : public LivingEntity {
         bullet_count = 10;
         bullet_timer = 40;
     }
+    void hit(int damage) override {
+        LivingEntity::hit(damage);
+        game->shake_screen();
+    }
     bool out() override {
         return false;
     }

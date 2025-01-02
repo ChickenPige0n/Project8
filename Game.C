@@ -1,5 +1,6 @@
 #include "Bomb.h"
 #include "Bullet.h"
+#include "Constants.h"
 #include "Game.h"
 #include "HealthPack.h"
 #include "Laser.h"
@@ -32,29 +33,29 @@ Game::Game(bool read_map) : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
     } else {
         fstream file("Map1.tkm");
         char ch;
-        for (int r = 0; r < MAX_ROW - MIN_ROW + 1; r++) {
-            for (int c = 0; c < MAX_COL - MIN_COL + 1; c++) {
+        for (int r = MIN_ROW; r < MAX_ROW; r++) {
+            for (int c = MIN_COL; c < MAX_COL; c++) {
                 file >> ch;
                 int index = 0;
                 switch (ch) {
                 case '#':
-                    obstacle_grid.set(MIN_ROW + r, MIN_COL + c, ch == '#');
+                    obstacle_grid.set(r, c, true);
                     break;
                 case 'P':
-                    player = new Player(this, MIN_ROW + r, MIN_COL + c);
-                    player_ori[0] = MIN_ROW + r;
-                    player_ori[1] = MIN_COL + c;
+                    player = new Player(this, r, c);
+                    player_ori[0] = r;
+                    player_ori[1] = c;
                     break;
                 }
                 if (ch <= '9' && ch >= '0') {
                     index = ch - '0';
-                    spawn_points[index][0] = MIN_ROW + r;
-                    spawn_points[index][1] = MIN_COL + c;
+                    spawn_points[index][0] = r;
+                    spawn_points[index][1] = c;
                 }
                 if (ch <= 'j' && ch >= 'a') {
                     index = ch - 'a' + 10;
-                    spawn_points[index][0] = MIN_ROW + r;
-                    spawn_points[index][1] = MIN_COL + c;
+                    spawn_points[index][0] = r;
+                    spawn_points[index][1] = c;
                 }
             }
         }
@@ -81,6 +82,10 @@ void Game::add_laser(size_t r, size_t c, Direction d) {
 }
 void Game::add_particle(size_t r, size_t c, char display) {
     items.push_back(new Particle(this, r, c, display));
+}
+
+void Game::shake_screen() {
+    gui.shake();
 }
 
 void Game::update() {
@@ -127,8 +132,8 @@ void Game::update() {
         }
     }
 
-    for (int r = MIN_ROW; r < MAX_ROW; r++) {
-        for (int c = MIN_COL; c < MAX_COL; c++) {
+    for (int r = MIN_ROW; r <= MAX_ROW; r++) {
+        for (int c = MIN_COL; c <= MAX_COL; c++) {
             if (obstacle_grid.get(r, c)) {
                 gui.paintat(r, c, '#');
             }
