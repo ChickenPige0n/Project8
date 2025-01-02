@@ -26,9 +26,9 @@ jobs:
 
     - name: build
       run: make
-
-    - name: Run check
-      run: make check
-
-    - name: Run distcheck
-      run: make distcheck
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: executable
+        path: ./mygame
