@@ -44,19 +44,19 @@ class Tank : public LivingEntity {
     }
 
     void normal_update() {
-        dir = dir == NoneDirection ? Up : dir;
         int rn = rand() % 10;
         if (rn >= 0 && rn <= 1)
-            dir = NoneDirection;
-        if (rn >= 2 && rn <= 6)
             return;
-        if (rn == 7)
-            dir = Direction((dir + 1) % 4);
-        if (rn == 8)
-            dir = Direction((dir + 1) % 4);
-        if (rn == 9)
-            dir = Direction((dir + 2) % 4);
-        // dir = Direction();
+        if (rn >= 2 && rn <= 6)
+            dir = NoneDirection;
+        switch (rn) {
+        case 7:
+        case 8:
+        case 9:
+            dir = dir == NoneDirection ? Up : dir;
+            dir = Direction((dir + rn - 6) % 4);
+            break;
+        }
     }
 
     void super_update() {
