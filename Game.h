@@ -48,6 +48,7 @@ class Game {
     void add_bullet(size_t r, size_t c, Direction d, char *source);
     void add_bomb(size_t r, size_t c);
     void add_mine(size_t r, size_t c);
+    void add_particle(size_t r, size_t c, char display);
     void add_laser(size_t r, size_t c, Direction d);
     void update();
     void complete(bool win);

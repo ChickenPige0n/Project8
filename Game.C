@@ -5,6 +5,7 @@
 #include "Laser.h"
 #include "LivingEntity.h"
 #include "Mine.h"
+#include "Particle.h"
 #include "Player.h"
 #include "Tank.h"
 #include <cstdlib>
@@ -77,6 +78,9 @@ void Game::add_mine(size_t r, size_t c) {
 }
 void Game::add_laser(size_t r, size_t c, Direction d) {
     items.push_back(new Laser(r, c, this, d));
+}
+void Game::add_particle(size_t r, size_t c, char display) {
+    items.push_back(new Particle(this, r, c, display));
 }
 
 void Game::update() {
