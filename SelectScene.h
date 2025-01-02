@@ -2,7 +2,9 @@
 #define _SELECTSCENE_H_
 #include "Gui.h"
 #include <curses.h>
+#include <math.h>
 class SelectScene {
+    double time;
     int selection;
     Gui gui;
 
@@ -13,6 +15,8 @@ class SelectScene {
     }
     ~SelectScene() {}
     int update() {
+        time += 0.5;
+        time = fmod(time, 2 * M_PI);
         gui.clear();
         int c = gui.get();
         switch (c) {
@@ -28,9 +32,14 @@ class SelectScene {
         gui.printMsg(2, 10, "Select Gamemode");
 
         gui.printMsg(4, 10, "Press c to confirm");
-        gui.printMsg(12, 40, "Random Map");
-        gui.printMsg(13, 40, "Custom Map");
-        gui.paintat(11 + selection, 38, 'o');
+        gui.printMsg(19, 40, "Random Map");
+        gui.printMsg(20, 40, "Custom Map");
+
+        for (int i = 0; i < 11; i++) {
+            gui.paintat(9.5 + sin(time + i), 15 + (i * 6), "TANK BATTLE"[i]);
+        }
+
+        gui.paintat(18 + selection, 38, 'o');
         gui.redraw();
         if (c == 'c') {
             return selection;
