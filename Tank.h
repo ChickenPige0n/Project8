@@ -2,6 +2,7 @@
 #define _TANK_H_
 #include "Bomb.h"
 #include "Constants.h"
+#include "Direction.h"
 #include "Game.h"
 #include "Item.h"
 #include <cstdlib>
@@ -43,17 +44,19 @@ class Tank : public LivingEntity {
     }
 
     void normal_update() {
-        dir = dir == NoneDirection ? Up : dir;
         int rn = rand() % 10;
-        if (rn >= 0 && rn <= 6)
+        if (rn >= 0 && rn <= 1)
             return;
-        if (rn == 7)
-            dir = Direction((dir + 1) % 4);
-        if (rn == 8)
-            dir = Direction((dir + 1) % 4);
-        if (rn == 9)
-            dir = Direction((dir + 2) % 4);
-        // dir = Direction();
+        if (rn >= 2 && rn <= 6)
+            dir = NoneDirection;
+        switch (rn) {
+        case 7:
+        case 8:
+        case 9:
+            dir = dir == NoneDirection ? Up : dir;
+            dir = Direction((dir + rn - 6) % 4);
+            break;
+        }
     }
 
     void super_update() {

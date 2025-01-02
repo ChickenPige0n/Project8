@@ -60,6 +60,12 @@ Game::Game(bool read_map) : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
             }
         }
     }
+    for (int r = MIN_ROW; r <= MAX_ROW; r++)
+        for (int c = MIN_COL; c <= MAX_COL; c++)
+            // magic to fix background
+            gui.paintat(r, c, '#', Gui::Player);
+    gui.redraw();
+    gui.clear();
     Tank::init();
     gui.init();
     items.push_back(player);
@@ -162,11 +168,12 @@ bool Game::query_hit(Bullet *bullet) {
 }
 
 bool Game::query_hit(Laser *laser, int row, int col) {
-    for (auto enitiy : get_items<LivingEntity>()) {
+    auto list = get_items<LivingEntity>();
+    for (auto enitiy : list) {
         auto etype = enitiy->get_type();
-        int width = strcmp(etype, "Player") == 0 ? 1 : 2;
+        int width = dynamic_cast<Player *>(enitiy) ? 1 : 2;
         if (row == enitiy->row && abs(col - enitiy->col) < width) {
-            if (strcmp(etype, "Player") == 0) {
+            if (dynamic_cast<Player *>(enitiy)) {
                 enitiy->hit(3);
             } else {
                 if (auto t = dynamic_cast<Tank *>(enitiy)) {
@@ -178,13 +185,13 @@ bool Game::query_hit(Laser *laser, int row, int col) {
                 return true;
             }
         }
-        return false;
     }
+    return false;
 }
 void Game::complete(bool win) {
     gui.clear();
-    gui.printMsg(9, 30, win ? "YOU WIN" : "YOU LOST");
-    gui.printMsg(10, 25, "Game ended, score:", score);
+    gui.printMsg(9, 40, win ? "YOU WIN" : "YOU LOST");
+    gui.printMsg(19, 35, "Game ended, score:", score);
     gui.redraw();
     usleep(3000000);
     int c = gui.get();
