@@ -70,7 +70,6 @@ Game::Game(bool read_map) : obstacle_grid(BitGrid(MAX_ROW + 4, MAX_COL + 4)) {
     gui.init();
     items.push_back(player);
     score = 0;
-    srand(time(0));
 }
 
 void Game::add_bullet(size_t r, size_t c, Direction d, char *source) {
